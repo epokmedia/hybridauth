@@ -1,3 +1,23 @@
+This repo has been modified to be used with [SocalNick/ScnSocalNick](https://github.com/SocalNick/ScnSocialAuth/)
+First Fix : If Zend/Session is started, the superglobal $_SESSION is replaced by an instance of Zend\Session\Storage\SessionStorage , a subclass of ArrayObject.
+But this object is a regression, because it does not support deep unset :
+
+```php
+unset($_SESSION["HA::STORE"][$key]);
+```
+does not work.
+
+It can be fixed with
+
+```php
+$store = &$_SESSION["HA::STORE"];
+unset( $store[$key] );
+```
+
+This fork will replace all problematic codes.
+
+
+
 # HybridAuth 2.1.0-dev
 
 HybridAuth enables developers to easily build social applications and tools 
