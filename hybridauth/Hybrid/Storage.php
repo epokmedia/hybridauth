@@ -64,7 +64,9 @@ class Hybrid_Storage
 		$key = strtolower( $key );  
 
 		if( isset( $_SESSION["HA::STORE"][$key] ) ){ 
-			unset( $_SESSION["HA::STORE"][$key] );
+			// Fix with Zend/Session
+			$store = &$_SESSION["HA::STORE"];
+			unset( $store[$key] );
 		} 
 	}
 
@@ -73,9 +75,11 @@ class Hybrid_Storage
 		$key = strtolower( $key ); 
 
 		if( isset( $_SESSION["HA::STORE"] ) && count( $_SESSION["HA::STORE"] ) ) {
-			foreach( $_SESSION["HA::STORE"] as $k => $v ){ 
+			$store = &$_SESSION["HA::STORE"];
+			foreach( $store as $k => $v ){ 
 				if( strstr( $k, $key ) ){
-					unset( $_SESSION["HA::STORE"][ $k ] ); 
+					// Fix with Zend/Session
+					unset( $store[$k] );
 				}
 			}
 		}
