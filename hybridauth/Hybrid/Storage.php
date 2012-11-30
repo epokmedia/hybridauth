@@ -63,10 +63,12 @@ class Hybrid_Storage
 	{
 		$key = strtolower( $key );  
 
-		if( isset( $_SESSION["HA::STORE"][$key] ) ){ 
+		if( isset( $_SESSION["HA::STORE"] ) ){ 
 			// Fix with Zend/Session
 			$store = &$_SESSION["HA::STORE"];
-			unset( $store[$key] );
+			if( isset( $store[$key] )){
+				unset( $store[$key] );
+			}
 		} 
 	}
 
